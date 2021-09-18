@@ -19,6 +19,8 @@
     ],
     "react/react-in-jsx-scope": "off",
     "no-unused-vars": "off",
+    "avoidEscape": true,
+    "allowTemplateLiterals": true,
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
