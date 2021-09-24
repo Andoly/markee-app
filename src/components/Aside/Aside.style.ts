@@ -80,6 +80,7 @@ export const ButtonPlus = styled(DefaultButton)`
 export const RemoveIcon = styled(Icon.Remove)`
   ${({ theme }) => css`
     width: 12px;
+    cursor: pointer;
     display: none;
     margin: 0 0 0 auto;
     padding: 0;
@@ -101,7 +102,7 @@ export const FileListItem = styled.li`
 
 `
 
-export const FileItem = styled(DefaultButton)`
+export const FileItem = styled.a`
   ${({ theme }) => css`
     background: ${({ theme }) => theme.colors.black};
     border: 1px solid ${({ theme }) => theme.colors.black};
@@ -111,7 +112,6 @@ export const FileItem = styled(DefaultButton)`
     font-size: 1.6rem;
     margin-bottom: 6px;
     padding: 8px 20px;
-    width: 100%;
     display: flex;
     justify-content: left;
     align-items: center;
