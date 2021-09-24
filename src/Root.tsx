@@ -1,12 +1,16 @@
 import Aside from 'components/Aside/Aside'
+import { Content } from 'components/Content/Content'
 import { theme } from 'resources/theme'
-import { ThemeProvider, createGlobalStyle } from 'styled-components/macro'
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components/macro'
 
 const Root = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Aside />
+      <Main>
+        <Aside />
+        <Content />
+      </Main>
     </ThemeProvider>
   )
 }
@@ -22,6 +26,10 @@ html {
 body {
   font-family: 'DM Sans', sans-serif;
 }
+`
+const Main = styled.main`
+  display: flex;
+  height: 100vh;
 `
 
 export default Root

@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components/macro'
+import * as Icon from 'ui/icons'
 
 export const AsideContainer = styled.aside`
   background: ${({ theme }) => theme.colors.black};
-  height: 100vh;
   width: 33.2rem;
   padding: 3.2rem;
 `
@@ -73,6 +73,60 @@ export const ButtonPlus = styled(DefaultButton)`
 
     & svg {
       margin-right: 10px;
+    }
+  `}
+`
+
+export const RemoveIcon = styled(Icon.Remove)`
+  ${({ theme }) => css`
+    width: 12px;
+    display: none;
+    margin: 0 0 0 auto;
+    padding: 0;
+  
+    &:hover {
+      color: ${theme.colors.primary};
+    }
+  `}
+`
+
+export const ArchivesList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`
+
+export const FileListItem = styled.li`
+  position: relative;
+
+`
+
+export const FileItem = styled(DefaultButton)`
+  ${({ theme }) => css`
+    background: ${({ theme }) => theme.colors.black};
+    border: 1px solid ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.white};
+
+    border-radius: 4px;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
+    padding: 8px 20px;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    & svg {
+      margin-right: 12px;
+      padding-top: 2px;
+      align-self: center;
+    }
+    &:hover {
+      background-color: ${theme.colors.lightBlack};
+
+      ${RemoveIcon} {
+        display: block;
+      }
     }
   `}
 `
