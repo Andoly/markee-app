@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components/macro'
 import * as Icon from 'ui/icons'
+import { StatusIconProps, StatusIcon } from './StatusIcon'
 
 export const AsideContainer = styled.aside`
   background: ${({ theme }) => theme.colors.black};
@@ -78,17 +79,8 @@ export const ButtonPlus = styled(DefaultButton)`
 `
 
 export const RemoveIcon = styled(Icon.Remove)`
-  ${({ theme }) => css`
-    width: 12px;
-    cursor: pointer;
-    display: none;
-    margin: 0 0 0 auto;
-    padding: 0;
-  
-    &:hover {
-      color: ${theme.colors.primary};
-    }
-  `}
+  margin: 0 0 0 auto;
+  padding: 0;
 `
 
 export const ArchivesList = styled.ul`
@@ -96,37 +88,64 @@ export const ArchivesList = styled.ul`
   margin: 0;
   padding: 0;
 `
-
-export const FileListItem = styled.li`
-  position: relative;
-
+export const StatusIconStyled = styled(StatusIcon)<StatusIconProps>`
+  ${({ status }) => css`
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    margin-top: ${status === 'saving' ? -5 : 0}px;
+    transform: translateY(-50%);
+  `}
 `
 
-export const FileItem = styled.a`
+export const RemoveButton = styled(DefaultButton)`
+  background: transparent;
+  border: 0;
+  display: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+`
+
+export const FileListItem = styled.li`
   ${({ theme }) => css`
-    background: ${({ theme }) => theme.colors.black};
-    border: 1px solid ${({ theme }) => theme.colors.black};
-    color: ${({ theme }) => theme.colors.white};
+    position: relative;
 
-    border-radius: 4px;
-    font-size: 1.6rem;
-    margin-bottom: 6px;
-    padding: 8px 20px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-
-    & svg {
-      margin-right: 12px;
-      padding-top: 2px;
-      align-self: center;
-    }
     &:hover {
-      background-color: ${theme.colors.lightBlack};
-
-      ${RemoveIcon} {
+      ${ArchiveItem} {
+        background-color: ${theme.colors.lightBlack};
+      }
+      ${RemoveButton} {
         display: block;
       }
+
     }
+  `}
+`
+
+type FileItemLinkProps = {
+  active: boolean
+}
+
+export const ArchiveItem = styled.a<FileItemLinkProps>`
+  ${({ theme, active }) => css`
+    text-decoration: none;
+    background: url("${active ? Icon.FileActiveUrl : Icon.FileUrl}") 10px 50% no-repeat;
+      display: flex;
+    align-items: center;
+    border-radius: 4px;
+    color: ${theme.colors.white};
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+    padding: 8px 32px 8px 50px;
+
+    ${active &&
+    css`
+      background-color: ${theme.colors.lightBlack};
+    `}
   `}
 `
