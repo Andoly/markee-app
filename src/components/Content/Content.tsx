@@ -1,6 +1,20 @@
 import { useState, ChangeEvent } from 'react'
 import * as S from './Content.style'
 import marked from 'marked'
+import 'highlight.js/styles/github.css'
+
+import('highlight.js').then(hljs => {
+  const h = hljs.default
+
+  marked.setOptions({
+    highlight: (code, language) => {
+      if (language && h.getLanguage(language)) {
+        return h.highlight(code, { language }).value
+      }
+      return h.highlightAuto(code).value
+    },
+  })
+})
 
 export function Content () {
   const [content, setContent] = useState('')
