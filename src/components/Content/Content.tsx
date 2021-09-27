@@ -1,6 +1,14 @@
+import { useState, ChangeEvent } from 'react'
 import * as S from './Content.style'
+import marked from 'marked'
 
 export function Content () {
+  const [content, setContent] = useState('')
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value)
+  }
+
   return (
     <S.MainContent>
       <S.Header>
@@ -8,12 +16,13 @@ export function Content () {
       </S.Header>
 
       <S.ContentArticle>
-        <S.Textarea placeholder='Digite aqui seu markdown' />
+        <S.Textarea
+          placeholder='Digite aqui seu markdown'
+          value={content}
+          onChange={handleChange}
+        />
 
-        <S.ContentSection>
-          <h1>Bootcamp Brainn Co.</h1>
-          <p>Lorem ipsum dolor sit amet simet</p>
-        </S.ContentSection>
+        <S.ContentSection dangerouslySetInnerHTML={{ __html: marked(content) }} />
       </S.ContentArticle>
     </S.MainContent>
   )
