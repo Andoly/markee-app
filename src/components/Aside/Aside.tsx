@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import * as S from './Aside.style'
 import logoMarkee from './logoMarkee.png'
 import * as Icon from 'ui/icons'
+import { v4 as uuidv4 } from 'uuid'
 
 type File = {
   id: string;
@@ -10,45 +12,41 @@ type File = {
   status: 'editing' | 'saving' | 'saved';
 };
 
-const files: File[] = [
-  {
-    id: '0',
-    name: 'README.md',
-    content: 'Conteúdo do README',
-    active: false,
-    status: 'saving',
-  },
-  {
-    id: '1',
-    name: 'CONTRIBUTING.md',
-    content: 'Conteúdo do Contributing',
-    active: true,
-    status: 'saved',
-  },
-  {
-    id: '3',
-    name: 'README.md',
-    content: 'Conteúdo do README',
-    active: false,
-    status: 'editing',
-  },
-]
-
 const Aside = () => {
+  const [files, setFiles] = useState<File[]>([])
+
+  const handleAddFile = () => {
+    setFiles((files) =>
+      files
+        .map((file) => ({
+          ...file,
+          active: false,
+        }))
+        .concat({
+          id: uuidv4(),
+          name: 'Sem título',
+          content: '',
+          active: true,
+          status: 'saved',
+        }),
+    )
+  }
   return (
     <S.AsideContainer>
       <S.LinkLogo>
         <S.Logo src={logoMarkee} alt='markee.' />
       </S.LinkLogo>
       <S.Archive>Arquivos</S.Archive>
-      <S.ButtonPlus>
+      <S.ButtonPlus onClick={handleAddFile}>
         <Icon.Plus /> Adicionar arquivo
       </S.ButtonPlus>
 
       <S.ArchivesList>
         {files.map((file) => (
           <S.FileListItem key={file.id}>
-            <S.ArchiveItem active={file.active}>{file.name}</S.ArchiveItem>
+            <S.ArchiveItem href={`/file/${file.id}`} active={file.active}>
+              {file.name}
+            </S.ArchiveItem>
             {file.active && <S.StatusIconStyled status={file.status} />}
 
             {!file.active && (
