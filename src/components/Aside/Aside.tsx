@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { RefObject, useState } from 'react'
 import * as S from './Aside.style'
 import logoMarkee from './logoMarkee.png'
 import * as Icon from 'ui/icons'
@@ -12,10 +12,16 @@ type File = {
   status: 'editing' | 'saving' | 'saved';
 };
 
-const Aside = () => {
+type AsideProps = {
+  inputRef: RefObject<HTMLInputElement>
+}
+
+const Aside = ({ inputRef }: AsideProps) => {
   const [files, setFiles] = useState<File[]>([])
 
   const handleAddFile = () => {
+    inputRef.current?.focus()
+
     setFiles((files) =>
       files
         .map((file) => ({
