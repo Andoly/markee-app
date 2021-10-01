@@ -16,11 +16,27 @@ import('highlight.js').then(hljs => {
   })
 })
 
-type ContentProps = {
-  inputRef: RefObject<HTMLInputElement>
+type File = {
+  id: string;
+  name: string;
+  content: string;
+  active: boolean;
+  status: 'editing' | 'saving' | 'saved';
 };
 
-export function Content ({ inputRef }: ContentProps) {
+type ContentProps = {
+  inputRef: RefObject<HTMLInputElement>;
+  file?: File
+  onChangeFileName: (
+    id: string
+  ) => (event: ChangeEvent<HTMLInputElement>) => void;
+};
+
+export function Content ({ inputRef, file, onChangeFileName }: ContentProps) {
+  if (!file) {
+    return null
+  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [content, setContent] = useState('')
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -30,7 +46,11 @@ export function Content ({ inputRef }: ContentProps) {
   return (
     <S.MainContent>
       <S.Header>
-        <S.Input ref={inputRef} defaultValue='Sem título' />
+        <S.Input
+          ref={inputRef}
+          defaultValue='Sem título'
+          onChange={onChangeFileName(file.id)}
+        />
       </S.Header>
 
       <S.ContentArticle>

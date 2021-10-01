@@ -1,8 +1,6 @@
-import { RefObject, useState } from 'react'
 import * as S from './Aside.style'
 import logoMarkee from './logoMarkee.png'
 import * as Icon from 'ui/icons'
-import { v4 as uuidv4 } from 'uuid'
 
 type File = {
   id: string;
@@ -13,37 +11,18 @@ type File = {
 };
 
 type AsideProps = {
-  inputRef: RefObject<HTMLInputElement>
-}
+  files: File[];
+  onAddFile: () => void;
+};
 
-const Aside = ({ inputRef }: AsideProps) => {
-  const [files, setFiles] = useState<File[]>([])
-
-  const handleAddFile = () => {
-    inputRef.current?.focus()
-
-    setFiles((files) =>
-      files
-        .map((file) => ({
-          ...file,
-          active: false,
-        }))
-        .concat({
-          id: uuidv4(),
-          name: 'Sem título',
-          content: '',
-          active: true,
-          status: 'saved',
-        }),
-    )
-  }
+export function Aside ({ files, onAddFile }: AsideProps) {
   return (
     <S.AsideContainer>
       <S.LinkLogo>
         <S.Logo src={logoMarkee} alt='markee.' />
       </S.LinkLogo>
       <S.Archive>Arquivos</S.Archive>
-      <S.ButtonPlus onClick={handleAddFile}>
+      <S.ButtonPlus onClick={onAddFile}>
         <Icon.Plus /> Adicionar arquivo
       </S.ButtonPlus>
 
@@ -66,5 +45,3 @@ const Aside = ({ inputRef }: AsideProps) => {
     </S.AsideContainer>
   )
 }
-
-export default Aside

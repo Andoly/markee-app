@@ -1,19 +1,12 @@
-import { useRef } from 'react'
-import Aside from 'components/Aside/Aside'
-import { Content } from 'components/Content/Content'
 import { theme } from 'resources/theme'
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components/macro'
+import { ThemeProvider, createGlobalStyle } from 'styled-components/macro'
+import { App } from './app'
 
 const Root = () => {
-  const inputRef = useRef<HTMLInputElement>(null)
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Main>
-        <Aside inputRef={inputRef} />
-        <Content inputRef={inputRef} />
-      </Main>
+      <App />
     </ThemeProvider>
   )
 }
@@ -29,10 +22,6 @@ html {
 body {
   font-family: 'DM Sans', sans-serif;
 }
-`
-const Main = styled.main`
-  display: flex;
-  height: 100vh;
 `
 
 export default Root
