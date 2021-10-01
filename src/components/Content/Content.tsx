@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, RefObject } from 'react'
+import { ChangeEvent, RefObject } from 'react'
 import * as S from './Content.style'
 import marked from 'marked'
 import 'highlight.js/styles/github.css'
@@ -26,21 +26,23 @@ type File = {
 
 type ContentProps = {
   inputRef: RefObject<HTMLInputElement>;
-  file?: File
+  file?: File;
   onChangeFileName: (
     id: string
   ) => (event: ChangeEvent<HTMLInputElement>) => void;
+  onChangeContentFile: (
+    id: string
+  ) => (event: ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-export function Content ({ inputRef, file, onChangeFileName }: ContentProps) {
+export function Content ({
+  inputRef,
+  file,
+  onChangeFileName,
+  onChangeContentFile,
+}: ContentProps) {
   if (!file) {
     return null
-  }
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [content, setContent] = useState('')
-
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value)
   }
 
   return (
@@ -56,12 +58,12 @@ export function Content ({ inputRef, file, onChangeFileName }: ContentProps) {
       <S.ContentArticle>
         <S.Textarea
           placeholder='Digite aqui seu markdown'
-          value={content}
-          onChange={handleChange}
+          value={file.content}
+          onChange={onChangeContentFile(file.id)}
         />
 
         <S.ContentSection
-          dangerouslySetInnerHTML={{ __html: marked(content) }}
+          dangerouslySetInnerHTML={{ __html: marked(file.content) }}
         />
       </S.ContentArticle>
     </S.MainContent>

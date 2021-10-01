@@ -46,13 +46,27 @@ export function App () {
     }))
   }
 
+  const handleUpdateContentFile = (id: string) => (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setFiles(files => files.map(file => {
+      if (file.id === id) {
+        return {
+          ...file,
+          content: event.target.value,
+          status: 'editing',
+        }
+      }
+      return file
+    }))
+  }
+
   return (
     <Main>
       <Aside files={files} onAddFile={handleAddFile} />
       <Content
         file={files.find((file) => file.active === true)}
-        onChangeFileName={handleUpdateNameFile}
         inputRef={inputRef}
+        onChangeFileName={handleUpdateNameFile}
+        onChangeContentFile={handleUpdateContentFile}
       />
     </Main>
   )
