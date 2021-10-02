@@ -31,7 +31,7 @@ export function App () {
           if (file.active) {
             return {
               ...file,
-              status: 'editing',
+              status: 'saving',
             }
           }
           return file
@@ -109,12 +109,17 @@ export function App () {
     })))
   }
 
+  const handleRemoveFile = (id: string) => {
+    setFiles(files => files.filter(file => file.id !== id))
+  }
+
   return (
     <Main>
       <Aside
         files={files}
         onAddFile={handleAddFile}
         onSelectFile={handleSelectFile}
+        onRemoveFile={handleRemoveFile}
       />
       <Content
         file={files.find((file) => file.active === true)}

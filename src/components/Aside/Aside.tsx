@@ -15,9 +15,10 @@ type AsideProps = {
   files: File[];
   onAddFile: () => void;
   onSelectFile: (id: string) => (event: MouseEvent) => void;
+  onRemoveFile: (id: string) => void;
 };
 
-export function Aside ({ files, onAddFile, onSelectFile }: AsideProps) {
+export function Aside ({ files, onAddFile, onSelectFile, onRemoveFile }: AsideProps) {
   return (
     <S.AsideContainer>
       <S.LinkLogo>
@@ -41,7 +42,10 @@ export function Aside ({ files, onAddFile, onSelectFile }: AsideProps) {
             {file.active && <S.StatusIconStyled status={file.status} />}
 
             {!file.active && (
-              <S.RemoveButton title={`Remover o arquivo ${file.name}`}>
+              <S.RemoveButton
+                title={`Remover o arquivo ${file.name}`}
+                onClick={() => onRemoveFile(file.id)}
+              >
                 <S.RemoveIcon />
               </S.RemoveButton>
             )}
