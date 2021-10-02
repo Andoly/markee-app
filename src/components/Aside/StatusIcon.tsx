@@ -6,7 +6,7 @@ export type StatusIconProps = {
   className?: string;
 };
 
-const EditStatus = styled(Icon.Loading)`
+const EditStatus = styled(Icon.Ellipse)`
   margin-right: 2px;
 `
 

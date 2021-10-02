@@ -149,9 +149,9 @@ export const ArchiveItem = styled.a<FileItemLinkProps>`
     white-space: nowrap;
     overflow-wrap: break-word;
 
-    ${active &&
-    css`
-      background-color: ${theme.colors.lightBlack};
-    `};
+      ${active &&
+      css`
+        background-color: ${theme.colors.lightBlack};
+      `};
   `}
 `
