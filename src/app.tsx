@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useRef, MouseEvent } from 'react'
+import { ChangeEvent, useState, useRef, MouseEvent, useEffect } from 'react'
 import { Aside } from 'components/Aside/Aside'
 import { Content } from 'components/Content/Content'
 import { v4 as uuidv4 } from 'uuid'
@@ -15,6 +15,45 @@ type File = {
 export function App () {
   const [files, setFiles] = useState<File[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>
+
+    function updateStatus () {
+      const file = files.find(file => file.active)
+
+      if (!file || file.status !== 'editing') {
+        return
+      }
+
+      timer = setTimeout(() => {
+        setFiles(files => files.map(file => {
+          if (file.active) {
+            return {
+              ...file,
+              status: 'editing',
+            }
+          }
+          return file
+        }))
+
+        setTimeout(() => {
+          setFiles(files => files.map(file => {
+            if (file.active) {
+              return {
+                ...file,
+                status: 'saved',
+              }
+            }
+            return file
+          }))
+        }, 300)
+      }, 300)
+    }
+
+    updateStatus()
+    return () => clearTimeout(timer)
+  }, [files])
 
   const handleAddFile = () => {
     inputRef.current?.focus()

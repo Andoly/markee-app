@@ -50,7 +50,7 @@ export function Content ({
       <S.Header>
         <S.Input
           ref={inputRef}
-          defaultValue='Sem título'
+          value={file.name}
           onChange={onChangeFileName(file.id)}
         />
       </S.Header>
