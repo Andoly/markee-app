@@ -10,6 +10,16 @@ const EditStatus = styled(Icon.Loading)`
   margin-right: 2px;
 `
 
+export function StatusIcon ({ status = 'saved', className }: StatusIconProps) {
+  const Comp = {
+    editing: EditStatus,
+    saving: LoadingStatus,
+    saved: Icon.Check,
+  }[status]
+
+  return <Comp className={className} />
+}
+
 const rotation = keyframes`
   from {
     transform: rotate(0deg);
@@ -23,13 +33,3 @@ const rotation = keyframes`
 const LoadingStatus = styled(Icon.Loading)`
   animation: ${rotation} 1s infinite linear;
 `
-
-export function StatusIcon ({ status = 'saved', className }: StatusIconProps) {
-  const Comp = {
-    editing: EditStatus,
-    saving: LoadingStatus,
-    saved: Icon.Check,
-  }[status]
-
-  return <Comp className={className} />
-}

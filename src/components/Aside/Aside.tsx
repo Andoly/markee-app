@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import * as S from './Aside.style'
 import logoMarkee from './logoMarkee.png'
 import * as Icon from 'ui/icons'
-import { v4 as uuidv4 } from 'uuid'
+import { MouseEvent } from 'react'
 
 type File = {
   id: string;
@@ -12,45 +11,41 @@ type File = {
   status: 'editing' | 'saving' | 'saved';
 };
 
-const Aside = () => {
-  const [files, setFiles] = useState<File[]>([])
+type AsideProps = {
+  files: File[];
+  onAddFile: () => void;
+  onSelectFile: (id: string) => (event: MouseEvent) => void;
+  onRemoveFile: (id: string) => void;
+};
 
-  const handleAddFile = () => {
-    setFiles((files) =>
-      files
-        .map((file) => ({
-          ...file,
-          active: false,
-        }))
-        .concat({
-          id: uuidv4(),
-          name: 'Sem título',
-          content: '',
-          active: true,
-          status: 'saved',
-        }),
-    )
-  }
+export function Aside ({ files, onAddFile, onSelectFile, onRemoveFile }: AsideProps) {
   return (
     <S.AsideContainer>
       <S.LinkLogo>
         <S.Logo src={logoMarkee} alt='markee.' />
       </S.LinkLogo>
       <S.Archive>Arquivos</S.Archive>
-      <S.ButtonPlus onClick={handleAddFile}>
+      <S.ButtonPlus onClick={onAddFile}>
         <Icon.Plus /> Adicionar arquivo
       </S.ButtonPlus>
 
       <S.ArchivesList>
         {files.map((file) => (
           <S.FileListItem key={file.id}>
-            <S.ArchiveItem href={`/file/${file.id}`} active={file.active}>
+            <S.ArchiveItem
+              href={`/file/${file.id}`}
+              active={file.active}
+              onClick={onSelectFile(file.id)}
+            >
               {file.name}
             </S.ArchiveItem>
             {file.active && <S.StatusIconStyled status={file.status} />}
 
             {!file.active && (
-              <S.RemoveButton title={`Remover o arquivo ${file.name}`}>
+              <S.RemoveButton
+                title={`Remover o arquivo ${file.name}`}
+                onClick={() => onRemoveFile(file.id)}
+              >
                 <S.RemoveIcon />
               </S.RemoveButton>
             )}
@@ -60,5 +55,3 @@ const Aside = () => {
     </S.AsideContainer>
   )
 }
-
-export default Aside
