@@ -23,6 +23,7 @@ export const Input = styled.input`
   font-size: 1.6rem;
   padding: 5px;
   padding-left: 3rem;
+  height: 3rem;
 
   &:focus {
     outline: none;
@@ -34,6 +35,7 @@ export const ContentArticle = styled.article`
   align-items: center;
   height: calc(100vh - 90px );
   justify-content: space-between;
+  margin-top: 0.5rem;
 `
 
 export const Textarea = styled.textarea`

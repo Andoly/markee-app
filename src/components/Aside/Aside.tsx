@@ -1,6 +1,7 @@
 import * as S from './Aside.style'
 import logoMarkee from './logoMarkee.png'
 import * as Icon from 'ui/icons'
+import { MouseEvent } from 'react'
 
 type File = {
   id: string;
@@ -13,9 +14,10 @@ type File = {
 type AsideProps = {
   files: File[];
   onAddFile: () => void;
+  onSelectFile: (id: string) => (event: MouseEvent) => void;
 };
 
-export function Aside ({ files, onAddFile }: AsideProps) {
+export function Aside ({ files, onAddFile, onSelectFile }: AsideProps) {
   return (
     <S.AsideContainer>
       <S.LinkLogo>
@@ -29,7 +31,11 @@ export function Aside ({ files, onAddFile }: AsideProps) {
       <S.ArchivesList>
         {files.map((file) => (
           <S.FileListItem key={file.id}>
-            <S.ArchiveItem href={`/file/${file.id}`} active={file.active}>
+            <S.ArchiveItem
+              href={`/file/${file.id}`}
+              active={file.active}
+              onClick={onSelectFile(file.id)}
+            >
               {file.name}
             </S.ArchiveItem>
             {file.active && <S.StatusIconStyled status={file.status} />}

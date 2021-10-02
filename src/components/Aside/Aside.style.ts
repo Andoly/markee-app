@@ -122,7 +122,6 @@ export const FileListItem = styled.li`
       ${RemoveButton} {
         display: block;
       }
-
     }
   `}
 `
@@ -134,18 +133,25 @@ type FileItemLinkProps = {
 export const ArchiveItem = styled.a<FileItemLinkProps>`
   ${({ theme, active }) => css`
     text-decoration: none;
-    background: url("${active ? Icon.FileActiveUrl : Icon.FileUrl}") 10px 50% no-repeat;
-      display: flex;
+    background: url("${active ? Icon.FileActiveUrl : Icon.FileUrl}") 10px 50%
+      no-repeat;
+    display: flex;
     align-items: center;
     border-radius: 4px;
     color: ${theme.colors.white};
     font-size: 1.6rem;
     margin-bottom: 4px;
     padding: 8px 32px 8px 50px;
+    box-sizing: border-box;
+    height: 3.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-wrap: break-word;
 
     ${active &&
     css`
       background-color: ${theme.colors.lightBlack};
-    `}
+    `};
   `}
 `

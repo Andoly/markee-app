@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useRef } from 'react'
+import { ChangeEvent, useState, useRef, MouseEvent } from 'react'
 import { Aside } from 'components/Aside/Aside'
 import { Content } from 'components/Content/Content'
 import { v4 as uuidv4 } from 'uuid'
@@ -17,6 +17,8 @@ export function App () {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleAddFile = () => {
+    inputRef.current?.focus()
+
     setFiles((files) =>
       files
         .map((file) => ({
@@ -59,9 +61,22 @@ export function App () {
     }))
   }
 
+  const handleSelectFile = (id: string) => (event: MouseEvent) => {
+    event.preventDefault()
+
+    setFiles(files => files.map(file => ({
+      ...file,
+      active: file.id === id,
+    })))
+  }
+
   return (
     <Main>
-      <Aside files={files} onAddFile={handleAddFile} />
+      <Aside
+        files={files}
+        onAddFile={handleAddFile}
+        onSelectFile={handleSelectFile}
+      />
       <Content
         file={files.find((file) => file.active === true)}
         inputRef={inputRef}
