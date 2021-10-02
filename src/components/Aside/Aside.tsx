@@ -1,15 +1,8 @@
+import { MouseEvent } from 'react'
 import * as S from './Aside.style'
 import logoMarkee from './logoMarkee.png'
 import * as Icon from 'ui/icons'
-import { MouseEvent } from 'react'
-
-type File = {
-  id: string;
-  name: string;
-  content: string;
-  active: boolean;
-  status: 'editing' | 'saving' | 'saved';
-};
+import { File } from 'resources/files/types'
 
 type AsideProps = {
   files: File[];

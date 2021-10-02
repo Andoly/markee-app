@@ -3,14 +3,7 @@ import { Aside } from 'components/Aside/Aside'
 import { Content } from 'components/Content/Content'
 import { v4 as uuidv4 } from 'uuid'
 import styled from 'styled-components/macro'
-
-type File = {
-  id: string;
-  name: string;
-  content: string;
-  active: boolean;
-  status: 'editing' | 'saving' | 'saved';
-};
+import { File } from 'resources/files/types'
 
 export function App () {
   const [files, setFiles] = useState<File[]>([])

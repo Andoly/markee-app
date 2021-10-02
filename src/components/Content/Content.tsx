@@ -1,7 +1,8 @@
-import { ChangeEvent, RefObject } from 'react'
-import * as S from './Content.style'
 import marked from 'marked'
 import 'highlight.js/styles/github.css'
+import { ChangeEvent, RefObject } from 'react'
+import * as S from './Content.style'
+import { File } from 'resources/files/types'
 
 import('highlight.js').then(hljs => {
   const h = hljs.default
@@ -15,14 +16,6 @@ import('highlight.js').then(hljs => {
     },
   })
 })
-
-type File = {
-  id: string;
-  name: string;
-  content: string;
-  active: boolean;
-  status: 'editing' | 'saving' | 'saved';
-};
 
 type ContentProps = {
   inputRef: RefObject<HTMLInputElement>;
