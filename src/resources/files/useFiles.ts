@@ -52,6 +52,11 @@ export function useFiles () {
 
   useEffect(() => {
     localforage.setItem('markee', files)
+    const fileId = files.find(file => file.active === true)
+
+    if (fileId) {
+      window.history.pushState(null, '', `/file/${fileId.id}`)
+    }
   }, [files])
 
   useEffect(() => {
@@ -121,6 +126,7 @@ export function useFiles () {
 
   const handleSelectFile = (id: string) => (event: MouseEvent) => {
     event.preventDefault()
+    inputRef.current?.focus()
 
     setFiles((files) =>
       files.map((file) => ({
@@ -132,6 +138,9 @@ export function useFiles () {
 
   const handleRemoveFile = (id: string) => {
     setFiles((files) => files.filter((file) => file.id !== id))
+    if (files.length === 2) {
+      inputRef.current?.focus()
+    }
   }
 
   return {
