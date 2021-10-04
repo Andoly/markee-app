@@ -5,6 +5,7 @@ import { StatusIconProps, StatusIcon } from './StatusIcon'
 export const AsideContainer = styled.aside`
   background: ${({ theme }) => theme.colors.black};
   width: 33.2rem;
+  min-width: 30rem;
   padding: 3.2rem;
 `
 export const LinkLogo = styled.a`
@@ -87,7 +88,16 @@ export const ArchivesList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
+  max-height: 65rem;
+
+  ${({ theme }) => css`
+  &::-webkit-scrollbar {
+    width: 1px;
+    border: 1px solid ${theme.colors.lightBlack};
+  `}
 `
+
 export const StatusIconStyled = styled(StatusIcon)<StatusIconProps>`
   ${({ status }) => css`
     position: absolute;
@@ -127,8 +137,8 @@ export const FileListItem = styled.li`
 `
 
 type FileItemLinkProps = {
-  active: boolean
-}
+  active: boolean;
+};
 
 export const ArchiveItem = styled.a<FileItemLinkProps>`
   ${({ theme, active }) => css`
@@ -149,9 +159,10 @@ export const ArchiveItem = styled.a<FileItemLinkProps>`
     white-space: nowrap;
     overflow-wrap: break-word;
 
-      ${active &&
-      css`
-        background-color: ${theme.colors.lightBlack};
-      `};
+    ${active &&
+    css`
+      background-color: ${theme.colors.lightBlack};
+      color: ${theme.colors.primary};
+    `};
   `}
 `
